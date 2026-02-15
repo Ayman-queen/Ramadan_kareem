@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌙 Ramadan Mubarak - رمضان مبارك ✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Tajawal:wght@500;700;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: radial-gradient(ellipse at top, #1e0a3c 0%, #0d0221 40%, #000000 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Stars - Bright and Twinkling */
+        .stars {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            background: #FFFFFF;
+            border-radius: 50%;
+            box-shadow: 0 0 6px #FFFFFF, 0 0 12px #FFFF00;
+            animation: starTwinkle 1.5s ease-in-out infinite;
+        }
+
+        @keyframes starTwinkle {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.3); }
+        }
+
+        /* Golden Lanterns */
+        .lantern {
+            position: absolute;
+            animation: lanternSwing 3s ease-in-out infinite;
+            filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.8));
+        }
+
+        @keyframes lanternSwing {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
+
+        .lantern-string {
+            width: 3px;
+            height: 50px;
+            background: linear-gradient(to bottom, #8B4513, #654321);
+            margin: 0 auto;
+        }
+
+        .lantern-top {
+            width: 60px;
+            height: 15px;
+            background: linear-gradient(135deg, #B8860B, #8B4513);
+            border-radius: 8px 8px 0 0;
+            margin: 0 auto;
+            box-shadow: inset 0 2px 5px rgba(255, 215, 0, 0.3);
+        }
+
+        .lantern-body {
+            width: 55px;
+            height: 75px;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FF8C00 100%);
+            margin: 0 auto;
+            border-radius: 10px;
+            position: relative;
+            box-shadow: 0 0 40px rgba(255, 215, 0, 1),
+                        0 0 80px rgba(255, 165, 0, 0.8),
+                        inset 0 0 30px rgba(255, 255, 255, 0.4);
+            animation: lanternGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes lanternGlow {
+            0%, 100% { 
+                box-shadow: 0 0 40px rgba(255, 215, 0, 1),
+                           0 0 80px rgba(255, 165, 0, 0.8); 
+            }
+            50% { 
+                box-shadow: 0 0 60px rgba(255, 215, 0, 1),
+                           0 0 120px rgba(255, 165, 0, 1); 
+            }
+        }
+
+        .lantern-lines {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+        }
+
+        .lantern-line {
+            width: 2px;
+            height: 100%;
+            background: rgba(139, 69, 19, 0.3);
+            position: absolute;
+        }
+
+        .lantern-bottom {
+            width: 30px;
+            height: 20px;
+            background: linear-gradient(135deg, #B8860B, #8B4513);
+            margin: 0 auto;
+            border-radius: 0 0 15px 15px;
+            box-shadow: inset 0 -2px 5px rgba(255, 215, 0, 0.3);
+        }
+
+        .lantern-tassel {
+            width: 3px;
+            height: 40px;
+            background: linear-gradient(to bottom, #DC143C, #8B0000);
+            margin: 0 auto;
+        }
+
+        .tassel-end {
+            width: 15px;
+            height: 15px;
+            background: radial-gradient(circle, #DC143C, #8B0000);
+            border-radius: 50%;
+            margin: 0 auto;
+            box-shadow: 0 0 10px rgba(220, 20, 60, 0.8);
+        }
+
+        /* Main Card */
+        .card {
+            background: linear-gradient(135deg, #FFFFFF 0%, #FFFACD 100%);
+            border-radius: 35px;
+            padding: 3rem 2.5rem;
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.7),
+                        0 0 200px rgba(255, 215, 0, 0.5);
+            position: relative;
+            z-index: 10;
+            animation: cardEntrance 1.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes cardEntrance {
+            0% { 
+                opacity: 0; 
+                transform: scale(0.5) rotateY(90deg); 
+            }
+            100% { 
+                opacity: 1; 
+                transform: scale(1) rotateY(0deg); 
+            }
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            inset: -5px;
+            background: linear-gradient(45deg, 
+                #FFD700, #00FFFF, #FF1493, #00FF00, #FFD700);
+            border-radius: 35px;
+            z-index: -1;
+            animation: rainbowBorder 3s linear infinite;
+            background-size: 400% 400%;
+            filter: blur(8px);
+        }
+
+        @keyframes rainbowBorder {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Islamic Crescent and Star Symbol */
+        .islamic-symbol {
+            position: relative;
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 1.5rem;
+        }
+
+        .crescent {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            box-shadow: 0 0 60px rgba(255, 215, 0, 1),
+                        0 0 120px rgba(255, 165, 0, 0.8),
+                        0 0 180px rgba(255, 140, 0, 0.5);
+            animation: crescentGlow 2.5s ease-in-out infinite;
+            top: 20px;
+            left: 0;
+        }
+
+        @keyframes crescentGlow {
+            0%, 100% { 
+                box-shadow: 0 0 60px rgba(255, 215, 0, 1),
+                           0 0 120px rgba(255, 165, 0, 0.8); 
+            }
+            50% { 
+                box-shadow: 0 0 90px rgba(255, 215, 0, 1),
+                           0 0 180px rgba(255, 165, 0, 1); 
+            }
+        }
+
+        .crescent::after {
+            content: '';
+            position: absolute;
+            width: 85px;
+            height: 85px;
+            background: linear-gradient(135deg, #FFFACD 0%, #FFFFFF 100%);
+            border-radius: 50%;
+            top: 10px;
+            left: 5px;
+        }
+
+        .star-islamic {
+            position: absolute;
+            top: 0;
+            right: 10px;
+            font-size: 4rem;
+            color: #FFD700;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 1),
+                        0 0 60px rgba(255, 165, 0, 0.8);
+            animation: starPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes starPulse {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.1) rotate(72deg); }
+        }
+
+        /* Text Styles */
+        .arabic-main {
+            font-family: 'Amiri', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #8B4513 0%, #DAA520 50%, #FFD700 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+            filter: drop-shadow(2px 2px 4px rgba(139, 69, 19, 0.3));
+            direction: rtl;
+        }
+
+        .english-main {
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(90deg, 
+                #FF1493 0%, 
+                #FFD700 25%, 
+                #00FFFF 50%, 
+                #FF1493 75%, 
+                #FFD700 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: textRainbow 3s linear infinite;
+            margin-bottom: 1.5rem;
+            letter-spacing: 1px;
+        }
+
+        @keyframes textRainbow {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+
+        .dua-box {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 165, 0, 0.1));
+            border: 3px solid #DAA520;
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dua-box::before {
+            content: '☪';
+            position: absolute;
+            font-size: 8rem;
+            color: rgba(218, 165, 32, 0.1);
+            top: -20px;
+            right: -10px;
+            transform: rotate(-15deg);
+        }
+
+        .dua-text {
+            font-size: 1.125rem;
+            color: #2d1b4e;
+            line-height: 1.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .highlight {
+            color: #FF1493;
+            font-weight: 700;
+            text-shadow: 0 0 10px rgba(255, 20, 147, 0.3);
+        }
+
+        .blessing-text {
+            font-size: 1.125rem;
+            color: #1a1a1a;
+            line-height: 1.8;
+            margin: 1rem 0;
+        }
+
+        .from-section {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 3px solid;
+            border-image: linear-gradient(90deg, transparent, #FFD700, transparent) 1;
+        }
+
+        .from-label {
+            font-size: 1.125rem;
+            color: #FF1493;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .sender-name {
+            font-size: 1.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #8B4513 0%, #DAA520 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Floating Decorations */
+        .float-decoration {
+            position: absolute;
+            font-size: 2rem;
+            animation: floatAround 4s ease-in-out infinite;
+            opacity: 0.7;
+        }
+
+        @keyframes floatAround {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(10px, -10px) rotate(90deg); }
+            50% { transform: translate(0, -20px) rotate(180deg); }
+            75% { transform: translate(-10px, -10px) rotate(270deg); }
+        }
+
+        /* Sparkles */
+        .sparkles-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            overflow: hidden;
+            border-radius: 35px;
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: radial-gradient(circle, #FFD700, transparent);
+            border-radius: 50%;
+            animation: sparkleUp 2.5s linear infinite;
+        }
+
+        @keyframes sparkleUp {
+            0% { 
+                bottom: -10px;
+                opacity: 0;
+                transform: scale(0);
+            }
+            20% { opacity: 1; }
+            100% { 
+                bottom: 110%;
+                opacity: 0;
+                transform: scale(1.5);
+            }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .card {
+                padding: 2.5rem 1.5rem;
+            }
+
+            .arabic-main {
+                font-size: 2.8rem;
+            }
+
+            .english-main {
+                font-size: 2.2rem;
+            }
+
+            .islamic-symbol {
+                width: 110px;
+                height: 110px;
+            }
+
+            .crescent {
+                width: 80px;
+                height: 80px;
+            }
+
+            .crescent::after {
+                width: 68px;
+                height: 68px;
+                top: 8px;
+                left: 4px;
+            }
+
+            .star-islamic {
+                font-size: 3rem;
+                right: 5px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Stars Background -->
+    <div class="stars" id="starsContainer"></div>
+
+    <!-- Floating Lanterns -->
+    <div class="lantern" style="top: 8%; left: 8%;">
+        <div class="lantern-string"></div>
+        <div class="lantern-top"></div>
+        <div class="lantern-body">
+            <div class="lantern-lines">
+                <div class="lantern-line" style="left: 25%;"></div>
+                <div class="lantern-line" style="left: 50%;"></div>
+                <div class="lantern-line" style="left: 75%;"></div>
+            </div>
+        </div>
+        <div class="lantern-bottom"></div>
+        <div class="lantern-tassel"></div>
+        <div class="tassel-end"></div>
+    </div>
+
+    <div class="lantern" style="top: 12%; right: 10%; animation-delay: 1s;">
+        <div class="lantern-string"></div>
+        <div class="lantern-top"></div>
+        <div class="lantern-body">
+            <div class="lantern-lines">
+                <div class="lantern-line" style="left: 25%;"></div>
+                <div class="lantern-line" style="left: 50%;"></div>
+                <div class="lantern-line" style="left: 75%;"></div>
+            </div>
+        </div>
+        <div class="lantern-bottom"></div>
+        <div class="lantern-tassel"></div>
+        <div class="tassel-end"></div>
+    </div>
+
+    <div class="lantern" style="bottom: 10%; left: 12%; animation-delay: 0.5s;">
+        <div class="lantern-string"></div>
+        <div class="lantern-top"></div>
+        <div class="lantern-body">
+            <div class="lantern-lines">
+                <div class="lantern-line" style="left: 25%;"></div>
+                <div class="lantern-line" style="left: 50%;"></div>
+                <div class="lantern-line" style="left: 75%;"></div>
+            </div>
+        </div>
+        <div class="lantern-bottom"></div>
+        <div class="lantern-tassel"></div>
+        <div class="tassel-end"></div>
+    </div>
+
+    <div class="lantern" style="bottom: 15%; right: 10%; animation-delay: 1.5s;">
+        <div class="lantern-string"></div>
+        <div class="lantern-top"></div>
+        <div class="lantern-body">
+            <div class="lantern-lines">
+                <div class="lantern-line" style="left: 25%;"></div>
+                <div class="lantern-line" style="left: 50%;"></div>
+                <div class="lantern-line" style="left: 75%;"></div>
+            </div>
+        </div>
+        <div class="lantern-bottom"></div>
+        <div class="lantern-tassel"></div>
+        <div class="tassel-end"></div>
+    </div>
+
+    <!-- Main Card -->
+    <div class="card">
+        <div class="sparkles-container" id="sparklesContainer"></div>
+
+        <!-- Floating Decorations -->
+        <div class="float-decoration" style="top: 15px; left: 25px;">🌟</div>
+        <div class="float-decoration" style="top: 20px; right: 30px; animation-delay: 1s;">✨</div>
+        <div class="float-decoration" style="bottom: 25px; left: 35px; animation-delay: 0.5s;">⭐</div>
+        <div class="float-decoration" style="bottom: 30px; right: 40px; animation-delay: 1.5s;">💫</div>
+
+        <!-- Islamic Crescent and Star Symbol -->
+        <div class="islamic-symbol">
+            <div class="crescent"></div>
+            <div class="star-islamic">⭐</div>
+        </div>
+
+        <!-- Arabic Text -->
+        <div class="arabic-main">رَمَضَان مُبَارَك</div>
+
+        <!-- English Title -->
+        <h1 class="english-main">Ramadan Mubarak!</h1>
+
+        <!-- Blessing -->
+        <div class="blessing-text">
+            May this blessed month of <span class="highlight">Ramadan</span> 
+            bring you <span class="highlight">peace</span>, 
+            <span class="highlight">happiness</span>, and 
+            <span class="highlight">prosperity</span>! 🌙
+        </div>
+
+        <!-- Dua Box -->
+        <div class="dua-box">
+            <div class="dua-text">
+                May Allah accept your fasts, forgive your sins, 
+                answer your prayers, and grant you Jannah. 
+                May your heart be filled with <span class="highlight">faith</span>, 
+                your home with <span class="highlight">joy</span>, 
+                and your life with <span class="highlight">blessings</span>. 🤲✨
+            </div>
+        </div>
+
+        <!-- Closing Blessing -->
+        <div class="blessing-text">
+            Wishing you and your loved ones a month filled with 
+            <span class="highlight">spiritual growth</span>, 
+            <span class="highlight">good health</span>, and 
+            <span class="highlight">countless blessings</span>!
+        </div>
+
+        <!-- From Section -->
+        <div class="from-section">
+            <div class="from-label">💝 With Love, Prayers & Best Wishes 💝</div>
+            <div class="sender-name">Ayman Shaheen</div>
+        </div>
+    </div>
+
+    <script>
+        // Create 200 bright stars
+        const starsContainer = document.getElementById('starsContainer');
+        for (let i = 0; i < 200; i++) {
+            const star = document.createElement('div');
+            star.className = 'star';
+            const size = Math.random() * 4 + 1;
+            star.style.width = size + 'px';
+            star.style.height = size + 'px';
+            star.style.left = Math.random() * 100 + '%';
+            star.style.top = Math.random() * 100 + '%';
+            star.style.animationDelay = Math.random() * 1.5 + 's';
+            star.style.animationDuration = (1 + Math.random() * 1.5) + 's';
+            starsContainer.appendChild(star);
+        }
+
+        // Create continuous sparkles
+        const sparklesContainer = document.getElementById('sparklesContainer');
+        setInterval(() => {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.style.left = Math.random() * 100 + '%';
+            sparkle.style.animationDuration = (2 + Math.random()) + 's';
+            sparklesContainer.appendChild(sparkle);
+
+            setTimeout(() => sparkle.remove(), 3000);
+        }, 150);
+    </script>
+
+</body>
+</html>
