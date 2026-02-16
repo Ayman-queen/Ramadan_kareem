@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ramadan Kareem - Beautiful Islamic Website with Prayers, Calendar, and Blessings">
+    <meta name="keywords" content="Ramadan, Islam, Prayers, Fasting, Ramadan Kareem, Ramadan Mubarak">
+    <title>🌙 Ramadan Kareem - رمضان كريم ✨</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌙</text></svg>">
+    
+    <style>
+        /* ===== CSS VARIABLES (React/Vue Theme System) ===== */
+        :root {
+            /* ULTRA VIBRANT NEON COLORS - BRIGHTEST POSSIBLE! */
+            --neon-cyan: #00FFFF;
+            --neon-magenta: #FF00FF;
+            --neon-yellow: #FFFF00;
+            --neon-green: #00FF00;
+            --neon-pink: #FF1493;
+            --neon-purple: #9D00FF;
+            --neon-orange: #FF6600;
+            --neon-blue: #0080FF;
+            --gold: #FFD700;
+            --gold-bright: #FFED4E;
+            
+            /* Islamic Colors */
+            --islamic-green: #00FF00;
+            --islamic-gold: #FFD700;
+            --islamic-blue: #00CED1;
+            
+            /* Backgrounds */
+            --bg-dark: #0a0a0a;
+            --bg-purple: #1e0a3c;
+            --bg-card: #1a1a1a;
+            
+            /* Text */
+            --text-white: #ffffff;
+            --text-gray: #cccccc;
+            
+            /* Transitions (Framer Motion Style) */
+            --transition-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+            --transition-spring: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        /* ===== RESET ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: radial-gradient(ellipse at top, var(--bg-purple) 0%, #0d0221 40%, #000000 100%);
+            color: var(--text-white);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* ===== LOADING SCREEN ===== */
+        .loading-screen {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--neon-cyan) 50%, var(--neon-magenta) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            animation: fadeOut 0.8s ease 2.5s forwards;
+        }
+
+        @keyframes fadeOut {
+            to { opacity: 0; visibility: hidden; }
+        }
+
+        .loader {
+            width: 100px;
+            height: 100px;
+            border: 10px solid rgba(255, 255, 255, 0.2);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: white;
+            font-size: 2rem;
+            font-weight: 900;
+            margin-top: 2rem;
+            animation: pulse 1.5s ease-in-out infinite;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+        }
+
+        /* ===== SCROLL PROGRESS (Next.js Style) ===== */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 6px;
+            background: linear-gradient(90deg, 
+                var(--gold) 0%, 
+                var(--neon-green) 20%,
+                var(--neon-cyan) 40%,
+                var(--neon-pink) 60%,
+                var(--neon-magenta) 80%,
+                var(--gold) 100%);
+            z-index: 9999;
+            box-shadow: 0 0 30px var(--gold);
+            transition: width 0.1s ease;
+        }
+
+        /* ===== NAVIGATION ===== */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 3px solid transparent;
+            border-image: linear-gradient(90deg, var(--gold), var(--neon-cyan)) 1;
+            box-shadow: 0 5px 40px rgba(255, 215, 0, 0.4);
+            animation: slideDown 0.8s var(--transition-smooth) 0.5s both;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.25rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--gold), var(--neon-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: logoGlow 2s ease-in-out infinite;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        @keyframes logoGlow {
+            0%, 100% { filter: drop-shadow(0 0 10px var(--gold)); }
+            50% { filter: drop-shadow(0 0 30px var(--neon-cyan)); }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-link {
+            color: var(--text-white);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.125rem;
+            position: relative;
+            transition: all 0.3s var(--transition-smooth);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--gold), var(--neon-cyan));
+            transition: all 0.3s;
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover {
+            color: var(--gold);
+            transform: translateY(-3px);
+            text-shadow: 0 0 20px var(--gold);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* ===== MOBILE MENU ===== */
+        .mobile-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .mobile-toggle span {
+            width: 30px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--gold), var(--neon-cyan));
+            border-radius: 10px;
+            transition: all 0.3s var(--transition-smooth);
+        }
+
+        .mobile-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .mobile-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        .mobile-menu {
+            position: fixed;
+            top: 76px;
+            left: 0;
+            right: 0;
+            background: rgba(10, 10, 10, 0.98);
+            backdrop-filter: blur(20px);
+            padding: 2rem;
+            transform: translateX(-100%);
+            opacity: 0;
+            transition: all 0.3s var(--transition-smooth);
+            z-index: 999;
+            border-bottom: 3px solid var(--gold);
+        }
+
+        .mobile-menu.active {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .mobile-menu ul {
+            list-style: none;
+        }
+
+        .mobile-menu .nav-link {
+            display: block;
+            padding: 1rem;
+            font-size: 1.5rem;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+        }
+
+        /* ===== STARS BACKGROUND ===== */
+        .stars {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 10px white;
+            animation: twinkle 2s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.3); }
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8rem 2rem 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(255, 215, 0, 0.2), transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -50%;
+            left: -20%;
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, rgba(0, 255, 255, 0.15), transparent 70%);
+            animation: rotate 25s linear infinite reverse;
+        }
+
+        @keyframes rotate {
+            to { transform: rotate(360deg); }
+        }
+
+        .lanterns {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .lantern {
+            position: absolute;
+            animation: swing 4s ease-in-out infinite;
+        }
+
+        @keyframes swing {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
+
+        .lantern-body {
+            width: 50px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--gold) 0%, #FFA500 100%);
+            border-radius: 10px;
+            position: relative;
+            box-shadow: 0 0 40px var(--gold);
+            animation: lanternGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes lanternGlow {
+            0%, 100% { box-shadow: 0 0 40px var(--gold); }
+            50% { box-shadow: 0 0 80px var(--gold), 0 0 120px #FFA500; }
+        }
+
+        .hero-content {
+            max-width: 900px;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .islamic-symbol {
+            font-size: 8rem;
+            margin-bottom: 2rem;
+            animation: float 6s ease-in-out infinite;
+            filter: drop-shadow(0 0 30px var(--gold));
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        .hero h1 {
+            font-family: 'Amiri', serif;
+            font-size: clamp(3rem, 10vw, 6rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--gold) 0%, var(--neon-cyan) 50%, var(--neon-magenta) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: shimmer 3s linear infinite;
+            direction: rtl;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+
+        .hero h2 {
+            font-size: clamp(2rem, 6vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 2rem;
+            background: linear-gradient(90deg, var(--neon-pink), var(--gold), var(--neon-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: shimmer 3s linear infinite;
+        }
+
+        .hero-description {
+            font-size: 1.5rem;
+            color: var(--text-gray);
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn {
+            padding: 1.5rem 3rem;
+            border-radius: 50px;
+            font-size: 1.25rem;
+            font-weight: 800;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s var(--transition-smooth);
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--gold), var(--neon-orange));
+            color: var(--bg-dark);
+            box-shadow: 0 10px 40px rgba(255, 215, 0, 0.5);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 20px 60px rgba(255, 215, 0, 0.7);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-magenta));
+            color: white;
+            box-shadow: 0 10px 40px rgba(0, 255, 255, 0.5);
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 20px 60px rgba(0, 255, 255, 0.7);
+        }
+
+        /* ===== SECTIONS ===== */
+        .section {
+            padding: 6rem 2rem;
+            position: relative;
+        }
+
+        .section:nth-child(even) {
+            background: rgba(26, 26, 26, 0.3);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-label {
+            display: inline-block;
+            font-size: 1rem;
+            font-weight: 900;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            padding: 0.75rem 2rem;
+            background: rgba(255, 215, 0, 0.1);
+            border: 3px solid var(--gold);
+            border-radius: 50px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+        }
+
+        .section-title {
+            font-size: clamp(3rem, 6vw, 5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--gold), var(--neon-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-description {
+            font-size: 1.25rem;
+            color: var(--text-gray);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* ===== CARDS ===== */
+        .card {
+            background: rgba(26, 26, 26, 0.8);
+            backdrop-filter: blur(20px);
+            padding: 3rem;
+            border-radius: 30px;
+            border: 3px solid rgba(255, 215, 0, 0.3);
+            transition: all 0.4s var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, var(--gold), var(--neon-cyan));
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 30px 70px rgba(255, 215, 0, 0.4);
+            border-color: var(--gold);
+        }
+
+        .card-icon {
+            font-size: 5rem;
+            margin-bottom: 1.5rem;
+            display: block;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .card h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--gold), var(--neon-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .card p {
+            font-size: 1.125rem;
+            color: var(--text-gray);
+            line-height: 1.8;
+        }
+
+        /* ===== GRIDS ===== */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 3rem;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        /* ===== PRAYER TIMES ===== */
+        .prayer-card {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(0, 255, 255, 0.1));
+            padding: 2rem;
+            border-radius: 25px;
+            text-align: center;
+            border: 3px solid var(--gold);
+            transition: all 0.3s var(--transition-spring);
+        }
+
+        .prayer-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 20px 50px rgba(255, 215, 0, 0.5);
+        }
+
+        .prayer-name {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+
+        .prayer-time {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--neon-cyan), var(--neon-magenta));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* ===== QUOTE CARD ===== */
+        .quote-card {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(0, 255, 255, 0.1));
+            padding: 3rem;
+            border-radius: 30px;
+            border: 4px solid var(--gold);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quote-card::before {
+            content: '☪';
+            position: absolute;
+            font-size: 15rem;
+            color: rgba(255, 215, 0, 0.05);
+            top: -50px;
+            right: -50px;
+            transform: rotate(-15deg);
+        }
+
+        .quote-text {
+            font-size: 1.5rem;
+            font-family: 'Amiri', serif;
+            color: var(--text-white);
+            line-height: 2;
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: rgba(10, 10, 10, 0.95);
+            padding: 4rem 2rem 2rem;
+            border-top: 3px solid transparent;
+            border-image: linear-gradient(90deg, var(--gold), var(--neon-cyan)) 1;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-brand {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--gold), var(--neon-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .footer-text {
+            color: var(--text-gray);
+            font-size: 1.125rem;
+            margin-top: 2rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+
+        .social-link {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            text-decoration: none;
+            transition: all 0.3s var(--transition-spring);
+            border: 3px solid var(--gold);
+        }
+
+        .social-link:hover {
+            background: linear-gradient(135deg, var(--gold), var(--neon-cyan));
+            transform: translateY(-10px) rotate(15deg) scale(1.2);
+            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.6);
+        }
+
+        /* ===== REVEAL ANIMATION ===== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(60px);
+            transition: all 0.8s var(--transition-smooth);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== SCROLL TO TOP ===== */
+        .scroll-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--gold), var(--neon-cyan));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s var(--transition-smooth);
+            z-index: 998;
+            box-shadow: 0 5px 30px rgba(255, 215, 0, 0.5);
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-top:hover {
+            transform: translateY(-10px) scale(1.15);
+            box-shadow: 0 15px 50px rgba(255, 215, 0, 0.7);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-toggle {
+                display: flex;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .islamic-symbol {
+                font-size: 5rem;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .section {
+                padding: 4rem 1.5rem;
+            }
+
+            .grid-2,
+            .grid-3,
+            .grid-4 {
+                grid-template-columns: 1fr;
+            }
+
+            .lantern {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Loading Screen -->
+    <div class="loading-screen">
+        <div class="loader"></div>
+        <div class="loading-text">🌙 Ramadan Kareem 🌙</div>
+    </div>
+
+    <!-- Scroll Progress -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Stars Background -->
+    <div class="stars" id="stars"></div>
+
+    <!-- Floating Lanterns -->
+    <div class="lanterns">
+        <div class="lantern" style="top: 10%; left: 5%;">
+            <div class="lantern-body"></div>
+        </div>
+        <div class="lantern" style="top: 15%; right: 8%;">
+            <div class="lantern-body"></div>
+        </div>
+        <div class="lantern" style="bottom: 20%; left: 10%;">
+            <div class="lantern-body"></div>
+        </div>
+        <div class="lantern" style="bottom: 25%; right: 12%;">
+            <div class="lantern-body"></div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo" onclick="scrollToTop()">
+                <span>🌙</span> RAMADAN
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#prayers" class="nav-link">Prayers</a></li>
+                <li><a href="#quotes" class="nav-link">Quotes</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="mobile-toggle" id="mobileToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <ul>
+            <li><a href="#home" class="nav-link">Home</a></li>
+            <li><a href="#about" class="nav-link">About</a></li>
+            <li><a href="#prayers" class="nav-link">Prayers</a></li>
+            <li><a href="#quotes" class="nav-link">Quotes</a></li>
+            <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="islamic-symbol">☪️</div>
+            <h1>رَمَضَان كَرِيم</h1>
+            <h2>Ramadan Kareem!</h2>
+            <p class="hero-description">
+                A blessed month of fasting, prayer, and spiritual reflection. 
+                May Allah accept your worship and grant you peace.
+            </p>
+            <div class="hero-buttons">
+                <a href="#prayers" class="btn btn-primary">Prayer Times 🕌</a>
+                <a href="#quotes" class="btn btn-secondary">Read Quotes 📖</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Ramadan Section -->
+    <section class="section reveal" id="about">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">Learn More</div>
+                <h2 class="section-title">About Ramadan</h2>
+                <p class="section-description">
+                    The ninth month of the Islamic calendar
+                </p>
+            </div>
+            <div class="grid-3">
+                <div class="card">
+                    <span class="card-icon">🌙</span>
+                    <h3>Fasting</h3>
+                    <p>
+                        Muslims fast from dawn until sunset, abstaining from food, drink, and worldly pleasures. 
+                        This spiritual practice purifies the soul and brings us closer to Allah.
+                    </p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">🤲</span>
+                    <h3>Prayer</h3>
+                    <p>
+                        Special Taraweeh prayers are performed every night. Muslims increase their worship, 
+                        recite the Quran, and seek forgiveness during this blessed month.
+                    </p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">💝</span>
+                    <h3>Charity</h3>
+                    <p>
+                        Giving to those in need is highly encouraged. Zakat and Sadaqah help purify wealth 
+                        and bring communities together in compassion and generosity.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Prayer Times Section -->
+    <section class="section reveal" id="prayers">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">Daily Schedule</div>
+                <h2 class="section-title">Prayer Times</h2>
+                <p class="section-description">
+                    Approximate prayer times for reference
+                </p>
+            </div>
+            <div class="grid-4">
+                <div class="prayer-card">
+                    <div class="prayer-name">Fajr</div>
+                    <div class="prayer-time">5:30 AM</div>
+                </div>
+                <div class="prayer-card">
+                    <div class="prayer-name">Dhuhr</div>
+                    <div class="prayer-time">1:15 PM</div>
+                </div>
+                <div class="prayer-card">
+                    <div class="prayer-name">Asr</div>
+                    <div class="prayer-time">4:45 PM</div>
+                </div>
+                <div class="prayer-card">
+                    <div class="prayer-name">Maghrib</div>
+                    <div class="prayer-time">6:30 PM</div>
+                </div>
+                <div class="prayer-card">
+                    <div class="prayer-name">Isha</div>
+                    <div class="prayer-time">8:00 PM</div>
+                </div>
+                <div class="prayer-card">
+                    <div class="prayer-name">Taraweeh</div>
+                    <div class="prayer-time">9:00 PM</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quotes Section -->
+    <section class="section reveal" id="quotes">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">Inspiration</div>
+                <h2 class="section-title">Islamic Quotes</h2>
+                <p class="section-description">
+                    Words of wisdom from the Quran and Hadith
+                </p>
+            </div>
+            <div class="grid-2">
+                <div class="quote-card">
+                    <p class="quote-text">
+                        "O you who have believed, decreed upon you is fasting as it was decreed upon those before you 
+                        that you may become righteous."
+                        <br><br>
+                        <strong style="color: var(--gold);">— Quran 2:183</strong>
+                    </p>
+                </div>
+                <div class="quote-card">
+                    <p class="quote-text">
+                        "When Ramadan enters, the gates of Paradise are opened, the gates of Hellfire are closed, 
+                        and the devils are chained."
+                        <br><br>
+                        <strong style="color: var(--gold);">— Prophet Muhammad (PBUH)</strong>
+                    </p>
+                </div>
+                <div class="quote-card">
+                    <p class="quote-text">
+                        "Whoever fasts Ramadan with faith and seeking Allah's reward, his past sins will be forgiven."
+                        <br><br>
+                        <strong style="color: var(--gold);">— Prophet Muhammad (PBUH)</strong>
+                    </p>
+                </div>
+                <div class="quote-card">
+                    <p class="quote-text">
+                        "The month of Ramadan is that in which was revealed the Quran, a guidance for the people 
+                        and clear proofs of guidance and criterion."
+                        <br><br>
+                        <strong style="color: var(--gold);">— Quran 2:185</strong>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section reveal" id="contact">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label">Stay Connected</div>
+                <h2 class="section-title">Share the Blessings</h2>
+                <p class="section-description">
+                    Spread the message of Ramadan
+                </p>
+            </div>
+            <div class="grid-3">
+                <div class="card">
+                    <span class="card-icon">📧</span>
+                    <h3>Email</h3>
+                    <p><a href="mailto:shaheenayman786@gmail.com" style="color: var(--gold); text-decoration: none;">shaheenayman786@gmail.com</a></p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">📱</span>
+                    <h3>WhatsApp</h3>
+                    <p><a href="https://wa.me/923242441758" style="color: var(--gold); text-decoration: none;">+92 324 2441758</a></p>
+                </div>
+                <div class="card">
+                    <span class="card-icon">🌐</span>
+                    <h3>Share</h3>
+                    <p style="color: var(--text-gray);">Share this website with family and friends</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">🌙 RAMADAN KAREEM 🌙</div>
+            <p style="color: var(--text-gray); font-size: 1.25rem; margin: 1.5rem 0;">
+                May this blessed month bring you peace, happiness, and countless blessings.
+            </p>
+            <div class="social-links">
+                <a href="mailto:shaheenayman786@gmail.com" class="social-link">📧</a>
+                <a href="https://wa.me/923242441758" class="social-link">📱</a>
+                <a href="https://www.linkedin.com/in/ayman-shaheen-ai" target="_blank" class="social-link">💼</a>
+                <a href="https://github.com/Ayman-queen" target="_blank" class="social-link">💻</a>
+            </div>
+            <p class="footer-text">
+                © 2025 Ramadan Kareem Website • Created by Ayman Shaheen • Karachi, Pakistan 🇵🇰
+            </p>
+        </div>
+    </footer>
+
+    <!-- Scroll to Top -->
+    <div class="scroll-top" id="scrollTop" onclick="scrollToTop()">↑</div>
+
+    <!-- JavaScript (React/Vue/Next.js Patterns) -->
+    <script>
+        // ===== STATE MANAGEMENT (Redux/Vuex Style) =====
+        const AppState = {
+            scrollProgress: 0,
+            isMenuOpen: false,
+            starsCreated: false
+        };
+
+        // ===== UTILITY FUNCTIONS (Lodash Style) =====
+        const Utils = {
+            throttle(func, limit) {
+                let inThrottle;
+                return function(...args) {
+                    if (!inThrottle) {
+                        func.apply(this, args);
+                        inThrottle = true;
+                        setTimeout(() => inThrottle = false, limit);
+                    }
+                };
+            }
+        };
+
+        // ===== MOBILE MENU COMPONENT (React Style) =====
+        const MobileMenu = {
+            toggle: document.getElementById('mobileToggle'),
+            menu: document.getElementById('mobileMenu'),
+            
+            init() {
+                this.toggle.addEventListener('click', () => this.toggleMenu());
+                this.menu.querySelectorAll('.nav-link').forEach(link => {
+                    link.addEventListener('click', () => this.closeMenu());
+                });
+            },
+            
+            toggleMenu() {
+                this.toggle.classList.toggle('active');
+                this.menu.classList.toggle('active');
+                AppState.isMenuOpen = !AppState.isMenuOpen;
+            },
+            
+            closeMenu() {
+                this.toggle.classList.remove('active');
+                this.menu.classList.remove('active');
+                AppState.isMenuOpen = false;
+            }
+        };
+
+        // ===== STARS COMPONENT (Three.js Style) =====
+        const StarsComponent = {
+            container: document.getElementById('stars'),
+            
+            create() {
+                if (AppState.starsCreated) return;
+                
+                for (let i = 0; i < 200; i++) {
+                    const star = document.createElement('div');
+                    star.className = 'star';
+                    const size = Math.random() * 4 + 1;
+                    star.style.width = size + 'px';
+                    star.style.height = size + 'px';
+                    star.style.left = Math.random() * 100 + '%';
+                    star.style.top = Math.random() * 100 + '%';
+                    star.style.animationDelay = Math.random() * 2 + 's';
+                    star.style.animationDuration = (1 + Math.random() * 2) + 's';
+                    this.container.appendChild(star);
+                }
+                
+                AppState.starsCreated = true;
+            }
+        };
+
+        // ===== SCROLL PROGRESS (Next.js Style) =====
+        const ScrollProgress = {
+            bar: document.getElementById('scrollProgress'),
+            
+            update: Utils.throttle(function() {
+                const scrollTop = window.pageYOffset;
+                const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+                const scrollPercent = (scrollTop / scrollHeight) * 100;
+                this.bar.style.width = scrollPercent + '%';
+                AppState.scrollProgress = scrollPercent;
+            }, 16)
+        };
+
+        // ===== SCROLL REVEAL (AOS Style) =====
+        const ScrollReveal = {
+            elements: document.querySelectorAll('.reveal'),
+            
+            check: Utils.throttle(function() {
+                this.elements.forEach(el => {
+                    const elementTop = el.getBoundingClientRect().top;
+                    if (elementTop < window.innerHeight - 100) {
+                        el.classList.add('active');
+                    }
+                });
+            }, 100)
+        };
+
+        // ===== SCROLL TO TOP (Vue Style) =====
+        const ScrollToTop = {
+            button: document.getElementById('scrollTop'),
+            
+            update: Utils.throttle(function() {
+                if (window.pageYOffset > 300) {
+                    this.button.classList.add('visible');
+                } else {
+                    this.button.classList.remove('visible');
+                }
+            }, 100)
+        };
+
+        // ===== SMOOTH SCROLL UTILITY =====
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ===== NAVIGATION LINKS =====
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // ===== SCROLL EVENT LISTENER (Optimized) =====
+        window.addEventListener('scroll', () => {
+            ScrollProgress.update();
+            ScrollReveal.check();
+            ScrollToTop.update();
+        });
+
+        // ===== INITIALIZATION (React componentDidMount / Vue mounted) =====
+        document.addEventListener('DOMContentLoaded', () => {
+            MobileMenu.init();
+            StarsComponent.create();
+            ScrollReveal.check();
+            
+            console.log('🌙 Ramadan Kareem Website Loaded!');
+            console.log('✨ Built with React/Vue/Next.js patterns!');
+        });
+
+        // ===== PERFORMANCE MONITORING =====
+        if (window.performance) {
+            window.addEventListener('load', () => {
+                const perfData = window.performance.timing;
+                const pageLoadTime = perfData.loadEventEnd - perfData.navigationStart;
+                console.log(`⚡ Page Load Time: ${pageLoadTime}ms`);
+            });
+        }
+    </script>
+
+</body>
+</html>
